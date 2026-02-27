@@ -1,0 +1,17 @@
+# Core
+Pillow>=10.0.0
+PyYAML>=6.0
+numpy>=1.24.0
+
+# Real camera support (install as needed)
+# opencv-python>=4.8.0      # WebcamCamera + OpenCVMotionDetector + OpenCVDisplay
+# gphoto2>=2.3.0            # GPhoto2Camera (also needs: apt install libgphoto2-dev)
+# requests>=2.31.0          # CanonCamera
+
+# Real printer support (CUPS is system-level, no pip install needed)
+
+# AI enhancement (optional)
+# openai>=1.0.0             # OpenAIEnhancer
+
+# Testing
+pytest>=7.4.0

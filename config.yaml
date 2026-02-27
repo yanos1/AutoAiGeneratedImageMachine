@@ -1,0 +1,87 @@
+# config.yaml
+# -----------
+# Wedding Photo Automation App — default configuration
+# All values can be overridden via environment variables (see utils/config.py)
+
+hardware:
+  camera: mock            # mock | webcam | gphoto2 | canon
+  printer: file           # mock | file | cups | dnp
+  motion_detector: mock   # mock | opencv | keyboard
+
+ai:
+  enhancer: pillow_anime  # mock | pillow_anime | stable_diffusion | openai
+  overlay: wedding        # none | wedding | minimal
+
+display: log              # log | opencv
+
+output_dir: z_output
+
+# Couple / event info used in the overlay
+overlay_context:
+  couple_names: "Meshi & Yoni"
+  date: "June 10, 2026"
+  event_name: ""
+
+# Pipeline timing
+pipeline:
+  countdown_seconds: 3
+  cooldown_seconds: 5
+  error_cooldown_seconds: 3
+  print_copies: 1
+  # motion_timeout_seconds: null  # null = wait forever
+
+# Camera-specific options
+camera_options:
+  resolution: [1920, 1080]   # MockCamera / WebcamCamera
+  device_index: 0             # WebcamCamera
+  # host: "192.168.1.2"       # CanonCamera
+  # port: 8080                # CanonCamera
+
+# Printer-specific options
+printer_options:
+  simulated_delay: 1.5        # MockPrinter
+  # printer_name: "DNP_DS620" # CUPSPrinter / DNPPrinter
+  # media: "4x6in"            # CUPSPrinter
+  # resolution_dpi: 300       # CUPSPrinter
+  # size: "4x6"               # DNPPrinter
+
+# Motion detector options
+motion_options:
+  delay_seconds: 2.0          # MockMotionDetector
+  confidence: 0.95            # MockMotionDetector
+  device_index: 0             # OpenCVMotionDetector (can be different from camera)
+  sensitivity: 0.03           # OpenCVMotionDetector — fraction of frame area
+  min_confidence: 0.6         # OpenCVMotionDetector
+  cooldown: 2.0               # OpenCVMotionDetector — seconds between triggers
+
+# Enhancer options
+enhancer_options:
+  # --- pillow_anime (default, no API/GPU needed) ---
+  color_levels: 12          # palette depth: lower = more cartoon (8–32)
+  edge_strength: 0.75       # ink outline opacity (0.0–1.0)
+  saturation: 1.8           # colour vividness multiplier
+  smoothing: 5              # skin smoothing radius (odd number)
+
+  # --- stable_diffusion (local GPU, swap model freely) ---
+  # model_id: "andite/anything-v4.0"       # or local path, or Counterfeit-V3
+  # prompt: "anime style wedding, Studio Ghibli, soft cel shading, clean outlines"
+  # negative_prompt: "photorealistic, blurry, low quality, bad anatomy"
+  # strength: 0.65           # 0.55–0.75 sweet spot (higher = more anime, less original)
+  # guidance_scale: 9.0
+  # steps: 25
+  # device: "cpu"            # cpu | cuda | mps
+
+  # --- openai (cloud, GPT-Image-1, highest quality) ---
+  # prompt: "Transform this wedding photo into a beautiful anime illustration..."
+  # api_key: ""              # or set OPENAI_API_KEY env var
+  # quality: "high"          # low | medium | high
+  # size: "1024x1024"        # 1024x1024 | 1536x1024 | 1024x1536
+
+# Display options
+display_options:
+  window_name: "Wedding Photo Booth"
+  fullscreen: false
+
+logging:
+  level: INFO
+  # log_file: logs/app.log
